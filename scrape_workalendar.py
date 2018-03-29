@@ -22,7 +22,7 @@ def _parse_holidays(holidays):
 def _clean_holiday_date(holiday_date):
     (date, name) = holiday_date
     timezone = tzoffset('UTC+8', 8*3600)
-    date = datetime.combine(date, datetime.min.time()).isoformat()
+    date = datetime.combine(date, datetime.min.time()).replace(tzinfo=timezone).isoformat()
     return (date, name)
 
 def holidays_for_years(years):
@@ -38,6 +38,6 @@ def save_holidays(holidays, outfile='data/workalendar_sg.csv'):
         writer.writerows(holidays)
 
 current_year = datetime.now().year
-years = list(range(2000, current_year))
+years = list(range(2000, current_year+1))
 holidays = holidays_for_years(years)
 save_holidays(holidays)
